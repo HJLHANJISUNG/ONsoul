@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全球OHMNANON粉丝地图</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="languages.js"></script>
+    <style>
+      .world-map-container {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .map-header h2 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .map-header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .map-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .location-form {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 0 auto 30px;
+      }
+
+      .location-form h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #ff69b4;
+      }
+
+      .submit-location-btn {
+        width: 100%;
+        background: linear-gradient(45deg, #ff69b4, #90ee90);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .submit-location-btn:hover {
+        transform: scale(1.02);
+      }
+
+      .world-map {
+        width: 100%;
+        height: 500px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .map-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: #666;
+      }
+
+      .map-placeholder i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #ff69b4;
+      }
+
+      .user-marker {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #ff69b4;
+        border: 3px solid white;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .user-marker:hover {
+        transform: scale(1.2);
+        box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+      }
+
+      .user-tooltip {
+        position: absolute;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-size: 0.9rem;
+        z-index: 1000;
+        display: none;
+        max-width: 200px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ff69b4;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .country-chart {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .country-chart h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: linear-gradient(45deg, #ff69b4, #90ee90);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.3s ease;
+        z-index: 1000;
+      }
+
+      .back-btn:hover {
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        .world-map {
+          height: 300px;
+        }
+
+        .map-controls {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </button>
+
+    <div class="world-map-container">
+      <div class="map-header">
+        <h2>🌍 全球OHMNANON粉丝地图</h2>
+        <p>看看世界各地的粉丝都在哪里支持OHMNANON！</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalUsers">0</div>
+          <div class="stat-label">总用户数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalCountries">0</div>
+          <div class="stat-label">涉及国家</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalCities">0</div>
+          <div class="stat-label">涉及城市</div>
+        </div>
+      </div>
+
+      <div class="location-form">
+        <h3>📍 添加你的位置</h3>
+        <form id="locationForm">
+          <div class="form-group">
+            <label for="username">你的昵称</label>
+            <input
+              type="text"
+              id="username"
+              required
+              placeholder="请输入你的昵称"
+            />
+          </div>
+          <div class="form-group">
+            <label for="country">国家</label>
+            <select id="country" required>
+              <option value="">请选择国家</option>
+              <option value="中国">中国</option>
+              <option value="泰国">泰国</option>
+              <option value="日本">日本</option>
+              <option value="韩国">韩国</option>
+              <option value="美国">美国</option>
+              <option value="加拿大">加拿大</option>
+              <option value="英国">英国</option>
+              <option value="法国">法国</option>
+              <option value="德国">德国</option>
+              <option value="澳大利亚">澳大利亚</option>
+              <option value="新加坡">新加坡</option>
+              <option value="马来西亚">马来西亚</option>
+              <option value="菲律宾">菲律宾</option>
+              <option value="印度尼西亚">印度尼西亚</option>
+              <option value="越南">越南</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">城市</label>
+            <input
+              type="text"
+              id="city"
+              required
+              placeholder="请输入你的城市"
+            />
+          </div>
+          <button type="submit" class="submit-location-btn">
+            <i class="fas fa-map-marker-alt"></i> 添加位置
+          </button>
+        </form>
+      </div>
+
+      <div class="world-map" id="worldMap">
+        <div class="map-placeholder">
+          <i class="fas fa-globe-americas"></i>
+          <p>正在加载全球粉丝分布...</p>
+        </div>
+      </div>
+
+      <div class="country-chart">
+        <h3>📊 国家粉丝分布</h3>
+        <canvas id="countryChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE_URL = "http://localhost:3000/api";
+      let userLocations = [];
+      let countryStats = [];
+
+      // 页面加载完成后初始化
+      document.addEventListener("DOMContentLoaded", function () {
+        // 初始化语言管理器
+        if (window.languageManager) {
+          window.languageManager.updatePageText();
+        }
+
+        loadUserLocations();
+        loadCountryStats();
+        initializeLocationForm();
+      });
+
+      // 监听语言切换事件
+      document.addEventListener("languageChanged", function (e) {
+        updateWorldMapText();
+      });
+
+      // 加载用户位置信息
+      async function loadUserLocations() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/user-locations`);
+          const data = await response.json();
+          userLocations = data.locations;
+          displayUserMarkers();
+          updateStats();
+        } catch (error) {
+          console.error("加载用户位置失败:", error);
+        }
+      }
+
+      // 加载国家统计
+      async function loadCountryStats() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/country-stats`);
+          const data = await response.json();
+          countryStats = data.stats;
+          createCountryChart();
+        } catch (error) {
+          console.error("加载国家统计失败:", error);
+        }
+      }
+
+      // 显示用户标记
+      function displayUserMarkers() {
+        const mapContainer = document.getElementById("worldMap");
+        mapContainer.innerHTML = "";
+
+        // 简化的世界地图坐标映射
+        const countryCoordinates = {
+          中国: { x: 75, y: 45 },
+          泰国: { x: 70, y: 55 },
+          日本: { x: 85, y: 40 },
+          韩国: { x: 80, y: 42 },
+          美国: { x: 20, y: 45 },
+          加拿大: { x: 20, y: 35 },
+          英国: { x: 45, y: 40 },
+          法国: { x: 48, y: 42 },
+          德国: { x: 50, y: 42 },
+          澳大利亚: { x: 80, y: 70 },
+          新加坡: { x: 72, y: 58 },
+          马来西亚: { x: 70, y: 58 },
+          菲律宾: { x: 75, y: 58 },
+          印度尼西亚: { x: 72, y: 62 },
+          越南: { x: 72, y: 55 },
+        };
+
+        userLocations.forEach((location, index) => {
+          const coords = countryCoordinates[location.country];
+          if (coords) {
+            const marker = document.createElement("div");
+            marker.className = "user-marker";
+            marker.style.left = coords.x + "%";
+            marker.style.top = coords.y + "%";
+            marker.style.animationDelay = index * 0.1 + "s";
+
+            // 添加用户信息提示
+            marker.addEventListener("mouseenter", () => {
+              showTooltip(marker, location);
+            });
+
+            marker.addEventListener("mouseleave", () => {
+              hideTooltip();
+            });
+
+            mapContainer.appendChild(marker);
+          }
+        });
+
+        // 添加世界地图背景
+        const mapBackground = document.createElement("div");
+        mapBackground.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+                opacity: 0.3;
+                z-index: -1;
+            `;
+        mapContainer.appendChild(mapBackground);
+      }
+
+      // 显示用户信息提示
+      function showTooltip(marker, location) {
+        const tooltip = document.createElement("div");
+        tooltip.className = "user-tooltip";
+        tooltip.innerHTML = `
+                <strong>${location.username}</strong><br>
+                ${location.country} - ${location.city}
+            `;
+
+        const rect = marker.getBoundingClientRect();
+        tooltip.style.left = rect.left + "px";
+        tooltip.style.top = rect.top - 60 + "px";
+        tooltip.style.display = "block";
+
+        document.body.appendChild(tooltip);
+      }
+
+      // 隐藏提示
+      function hideTooltip() {
+        const tooltips = document.querySelectorAll(".user-tooltip");
+        tooltips.forEach((tooltip) => tooltip.remove());
+      }
+
+      // 更新统计信息
+      function updateStats() {
+        const totalUsers = userLocations.length;
+        const totalCountries = new Set(userLocations.map((l) => l.country))
+          .size;
+        const totalCities = new Set(userLocations.map((l) => l.city)).size;
+
+        document.getElementById("totalUsers").textContent = totalUsers;
+        document.getElementById("totalCountries").textContent = totalCountries;
+        document.getElementById("totalCities").textContent = totalCities;
+      }
+
+      // 创建国家分布图表
+      function createCountryChart() {
+        const ctx = document.getElementById("countryChart").getContext("2d");
+
+        const labels = countryStats.map((stat) => stat.country);
+        const data = countryStats.map((stat) => stat.count);
+        const colors = [
+          "#FF69B4",
+          "#90EE90",
+          "#87CEEB",
+          "#DDA0DD",
+          "#F0E68C",
+          "#FFB6C1",
+          "#98FB98",
+          "#ADD8E6",
+          "#E6E6FA",
+          "#F0F8FF",
+        ];
+
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: data,
+                backgroundColor: colors.slice(0, labels.length),
+                borderWidth: 2,
+                borderColor: "white",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // 初始化位置表单
+      function initializeLocationForm() {
+        const form = document.getElementById("locationForm");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const country = document.getElementById("country").value;
+          const city = document.getElementById("city").value;
+
+          if (!username || !country || !city) {
+            alert("请填写完整信息！");
+            return;
+          }
+
+          try {
+            const response = await fetch(`${API_BASE_URL}/user-location`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: username,
+                country: country,
+                city: city,
+              }),
+            });
+
+            if (response.ok) {
+              const result = await response.json();
+              alert(result.message);
+
+              // 重新加载数据
+              await loadUserLocations();
+              await loadCountryStats();
+
+              // 清空表单
+              form.reset();
+            } else {
+              const error = await response.json();
+              alert(`提交失败: ${error.error}`);
+            }
+          } catch (error) {
+            console.error("提交位置信息失败:", error);
+            alert("网络错误，请稍后重试");
+          }
+        });
+      }
+
+      // 更新世界地图页面文本
+      function updateWorldMapText() {
+        if (!window.languageManager) return;
+
+        const lang = window.languageManager;
+
+        // 更新页面标题和副标题
+        const title = document.querySelector(".map-header h2");
+        const subtitle = document.querySelector(".map-header p");
+        if (title) title.textContent = lang.getText("worldMap.title");
+        if (subtitle) subtitle.textContent = lang.getText("worldMap.subtitle");
+
+        // 更新统计标签
+        const statLabels = document.querySelectorAll(".stat-label");
+        if (statLabels[0])
+          statLabels[0].textContent = lang.getText("worldMap.stats.totalUsers");
+        if (statLabels[1])
+          statLabels[1].textContent = lang.getText(
+            "worldMap.stats.totalCountries"
+          );
+        if (statLabels[2])
+          statLabels[2].textContent = lang.getText(
+            "worldMap.stats.totalCities"
+          );
+
+        // 更新表单
+        const formTitle = document.querySelector(".location-form h3");
+        const usernameLabel = document.querySelector('label[for="username"]');
+        const countryLabel = document.querySelector('label[for="country"]');
+        const cityLabel = document.querySelector('label[for="city"]');
+        const submitBtn = document.querySelector(".submit-location-btn");
+
+        if (formTitle)
+          formTitle.textContent = lang.getText("worldMap.addLocation");
+        if (usernameLabel)
+          usernameLabel.textContent = lang.getText("worldMap.username");
+        if (countryLabel)
+          countryLabel.textContent = lang.getText("worldMap.country");
+        if (cityLabel) cityLabel.textContent = lang.getText("worldMap.city");
+        if (submitBtn)
+          submitBtn.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${lang.getText(
+            "worldMap.submit"
+          )}`;
+
+        // 更新输入框占位符
+        const usernameInput = document.getElementById("username");
+        const cityInput = document.getElementById("city");
+        if (usernameInput)
+          usernameInput.placeholder = lang.getText(
+            "worldMap.usernamePlaceholder"
+          );
+        if (cityInput)
+          cityInput.placeholder = lang.getText("worldMap.cityPlaceholder");
+
+        // 更新国家选择器
+        updateCountrySelect();
+
+        // 更新图表标题
+        const chartTitle = document.querySelector(".country-chart h3");
+        if (chartTitle)
+          chartTitle.textContent = lang.getText(
+            "worldMap.stats.countryDistribution"
+          );
+      }
+
+      // 更新国家选择器
+      function updateCountrySelect() {
+        if (!window.languageManager) return;
+
+        const countrySelect = document.getElementById("country");
+        if (!countrySelect) return;
+
+        const lang = window.languageManager;
+        const currentValue = countrySelect.value;
+
+        // 清空现有选项
+        countrySelect.innerHTML = "";
+
+        // 添加默认选项
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = lang.getText("worldMap.selectCountry");
+        countrySelect.appendChild(defaultOption);
+
+        // 添加国家选项
+        const countries = [
+          "china",
+          "thailand",
+          "japan",
+          "korea",
+          "usa",
+          "canada",
+          "uk",
+          "france",
+          "germany",
+          "australia",
+          "singapore",
+          "malaysia",
+          "philippines",
+          "indonesia",
+          "vietnam",
+          "other",
+        ];
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = lang.getText(`worldMap.countries.${country}`);
+          option.textContent = lang.getText(`worldMap.countries.${country}`);
+          countrySelect.appendChild(option);
+        });
+
+        // 恢复之前的选择
+        if (currentValue) {
+          countrySelect.value = currentValue;
+        }
+      }
+
+      // 定期刷新数据
+      setInterval(() => {
+        loadUserLocations();
+        loadCountryStats();
+      }, 30000); // 每30秒刷新一次
+    </script>
+  </body>
+</html>

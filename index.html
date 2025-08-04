@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OHMNANON - 陈炳林&黄乐荣 ONsoul应援站</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h2>OHMNANON</h2>
+          <span class="heart-beat">💕</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link">首页</a></li>
+          <li><a href="#about" class="nav-link">关于他们</a></li>
+          <li><a href="#works" class="nav-link">作品库</a></li>
+          <li><a href="#moments" class="nav-link">甜蜜时刻</a></li>
+          <li><a href="#community" class="nav-link">粉丝互动</a></li>
+          <li><a href="#news" class="nav-link">最新动态</a></li>
+          <li><a href="#support" class="nav-link">支持我们</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 首页 -->
+    <section id="home" class="hero">
+      <!-- 轮播图 -->
+      <div class="carousel">
+        <div class="carousel-container">
+          <div class="carousel-slide active">
+            <img
+              src="https://via.placeholder.com/1200x600/FFB6C1/FFFFFF?text=OHMNANON+最新活动"
+              alt="最新活动"
+            />
+            <div class="carousel-content">
+              <h2>最新活动</h2>
+              <p>关注OHMNANON的最新动态</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://via.placeholder.com/1200x600/87CEEB/FFFFFF?text=热门视频剪辑"
+              alt="热门视频"
+            />
+            <div class="carousel-content">
+              <h2>热门视频剪辑</h2>
+              <p>精选甜蜜瞬间</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://via.placeholder.com/1200x600/DDA0DD/FFFFFF?text=近期作品海报"
+              alt="作品海报"
+            />
+            <div class="carousel-content">
+              <h2>近期作品海报</h2>
+              <p>最新作品展示</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev">❮</button>
+        <button class="carousel-btn next">❯</button>
+        <div class="carousel-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <!-- CP简介 -->
+      <div class="cp-intro">
+        <div class="intro-content">
+          <h1 class="main-title">OHMNANON</h1>
+          <p class="subtitle">陈炳林 & 黄乐荣</p>
+          <p class="description">
+            从《2gether》到《Still 2gether》，从荧幕情侣到现实好友，
+            OHMNANON用他们的真诚和默契，为我们带来了无数甜蜜瞬间。
+            让我们一起见证这份珍贵的友谊，共同守护这份美好。
+          </p>
+          <div class="cp-photo">
+            <img
+              src="https://via.placeholder.com/400x300/FFB6C1/FFFFFF?text=OHMNANON+经典合照"
+              alt="OHMNANON合照"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- 快速入口 -->
+      <div class="quick-access">
+        <h2>快速入口</h2>
+        <div class="access-buttons">
+          <a href="#news" class="access-btn">
+            <i class="fas fa-newspaper"></i>
+            <span>最新动态</span>
+          </a>
+          <a href="#works" class="access-btn">
+            <i class="fas fa-film"></i>
+            <span>经典作品</span>
+          </a>
+          <a href="#community" class="access-btn">
+            <i class="fas fa-heart"></i>
+            <span>粉丝墙</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 心跳计数器 -->
+      <div class="heart-counter">
+        <div class="counter-container">
+          <h3>粉丝心跳计数器</h3>
+          <div class="counter-display">
+            <span id="heartCount">0</span>
+            <span class="counter-label">次心跳</span>
+          </div>
+          <button id="heartBtn" class="heart-btn">
+            <i class="fas fa-heart"></i>
+            点击撒糖
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于他们 -->
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section-title">关于他们</h2>
+
+        <!-- 个人档案 -->
+        <div class="profiles">
+          <div class="profile-card">
+            <div class="profile-image">
+              <img
+                src="https://via.placeholder.com/300x400/FFB6C1/FFFFFF?text=陈炳林"
+                alt="陈炳林"
+              />
+            </div>
+            <div class="profile-info">
+              <h3>陈炳林 (OHM)</h3>
+              <p><strong>生日：</strong>1995年5月4日</p>
+              <p>
+                <strong>代表作品：</strong>《2gether》、《Still 2gether》、《Bad
+                Buddy》
+              </p>
+              <p><strong>社交账号：</strong></p>
+              <div class="social-links">
+                <a href="#" class="social-link"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-youtube"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-image">
+              <img
+                src="https://via.placeholder.com/300x400/87CEEB/FFFFFF?text=黄乐荣"
+                alt="黄乐荣"
+              />
+            </div>
+            <div class="profile-info">
+              <h3>黄乐荣 (NANON)</h3>
+              <p><strong>生日：</strong>1997年12月18日</p>
+              <p>
+                <strong>代表作品：</strong>《2gether》、《Still 2gether》、《Bad
+                Buddy》
+              </p>
+              <p><strong>社交账号：</strong></p>
+              <div class="social-links">
+                <a href="#" class="social-link"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-youtube"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CP时间轴 -->
+        <div class="timeline">
+          <h3>CP时间轴</h3>
+          <div class="timeline-container">
+            <div class="timeline-item">
+              <div class="timeline-date">2020年</div>
+              <div class="timeline-content">
+                <h4>《2gether》开播</h4>
+                <p>两人首次合作主演，饰演Sarawat和Tine</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2021年</div>
+              <div class="timeline-content">
+                <h4>《Still 2gether》续集</h4>
+                <p>继续演绎甜蜜的大学情侣故事</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2021年</div>
+              <div class="timeline-content">
+                <h4>《Bad Buddy》合作</h4>
+                <p>在《Bad Buddy》中客串出演</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2022年</div>
+              <div class="timeline-content">
+                <h4>综艺节目合作</h4>
+                <p>共同参加多个综艺节目，展现默契配合</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 作品库 -->
+    <section id="works" class="works">
+      <div class="container">
+        <h2 class="section-title">作品库</h2>
+
+        <!-- 影视作品 -->
+        <div class="works-section">
+          <h3>影视作品</h3>
+          <div class="works-grid">
+            <div class="work-card">
+              <img
+                src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=2gether"
+                alt="2gether"
+              />
+              <div class="work-info">
+                <h4>2gether</h4>
+                <p>主演剧集</p>
+                <p>Sarawat和Tine的甜蜜校园爱情故事</p>
+              </div>
+            </div>
+            <div class="work-card">
+              <img
+                src="https://via.placeholder.com/300x200/87CEEB/FFFFFF?text=Still+2gether"
+                alt="Still 2gether"
+              />
+              <div class="work-info">
+                <h4>Still 2gether</h4>
+                <p>主演剧集</p>
+                <p>大学情侣的甜蜜续集</p>
+              </div>
+            </div>
+            <div class="work-card">
+              <img
+                src="https://via.placeholder.com/300x200/DDA0DD/FFFFFF?text=Bad+Buddy"
+                alt="Bad Buddy"
+              />
+              <div class="work-info">
+                <h4>Bad Buddy</h4>
+                <p>客串出演</p>
+                <p>在剧中客串出演</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 综艺/采访 -->
+        <div class="works-section">
+          <h3>综艺/采访</h3>
+          <div class="variety-list">
+            <div class="variety-item">
+              <i class="fas fa-tv"></i>
+              <span>《2gether》幕后花絮</span>
+              <a href="#" class="watch-btn">观看</a>
+            </div>
+            <div class="variety-item">
+              <i class="fas fa-tv"></i>
+              <span>《Still 2gether》采访</span>
+              <a href="#" class="watch-btn">观看</a>
+            </div>
+            <div class="variety-item">
+              <i class="fas fa-tv"></i>
+              <span>综艺节目合集</span>
+              <a href="#" class="watch-btn">观看</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 甜蜜时刻 -->
+    <section id="moments" class="moments">
+      <div class="container">
+        <h2 class="section-title">甜蜜时刻</h2>
+
+        <!-- 高糖合集 -->
+        <div class="moments-grid">
+          <div class="moment-card">
+            <img
+              src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=颁奖礼对视"
+              alt="颁奖礼对视"
+            />
+            <div class="moment-info">
+              <h4>颁奖礼对视</h4>
+              <p>甜蜜的眼神交流瞬间</p>
+            </div>
+          </div>
+          <div class="moment-card">
+            <img
+              src="https://via.placeholder.com/300x200/87CEEB/FFFFFF?text=幕后花絮"
+              alt="幕后花絮"
+            />
+            <div class="moment-info">
+              <h4>幕后花絮</h4>
+              <p>拍摄现场的温馨互动</p>
+            </div>
+          </div>
+          <div class="moment-card">
+            <img
+              src="https://via.placeholder.com/300x200/DDA0DD/FFFFFF?text=社交媒体互动"
+              alt="社交媒体互动"
+            />
+            <div class="moment-info">
+              <h4>社交媒体互动</h4>
+              <p>隔空喊话的甜蜜瞬间</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 粉丝创作 -->
+        <div class="fan-creations">
+          <h3>粉丝创作</h3>
+          <div class="creation-tabs">
+            <button class="tab-btn active" data-tab="fanfic">同人文</button>
+            <button class="tab-btn" data-tab="art">漫画</button>
+            <button class="tab-btn" data-tab="memes">表情包</button>
+          </div>
+          <div class="tab-content active" id="fanfic">
+            <p>精选同人文作品，按Rating分类...</p>
+          </div>
+          <div class="tab-content" id="art">
+            <p>粉丝创作的漫画作品...</p>
+          </div>
+          <div class="tab-content" id="memes">
+            <p>可爱的表情包下载...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 粉丝互动 -->
+    <section id="community" class="community">
+      <div class="container">
+        <h2 class="section-title">粉丝互动</h2>
+
+        <!-- 留言墙 -->
+        <div class="message-wall">
+          <h3>留言墙</h3>
+          <div class="message-form">
+            <textarea
+              id="messageText"
+              placeholder="写下你的祝福或表白..."
+            ></textarea>
+            <input type="file" id="messageImage" accept="image/*" />
+            <button id="submitMessage" class="submit-btn">发送留言</button>
+          </div>
+          <div class="messages-container" id="messagesContainer">
+            <!-- 留言将在这里动态显示 -->
+          </div>
+        </div>
+
+        <!-- 活动专区 -->
+        <div class="activities">
+          <h3>活动专区</h3>
+          <div class="activity-cards">
+            <div class="activity-card">
+              <h4>线上投票</h4>
+              <p>选出你最喜欢的OHMNANON瞬间</p>
+              <button class="vote-btn">参与投票</button>
+            </div>
+            <div class="activity-card">
+              <h4>二创比赛</h4>
+              <p>创作你的OHMNANON作品</p>
+              <button class="create-btn">参与创作</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最新动态 -->
+    <section id="news" class="news">
+      <div class="container">
+        <h2 class="section-title">最新动态</h2>
+
+        <div class="news-grid">
+          <div class="news-item">
+            <div class="news-date">2024年1月15日</div>
+            <h4>陈炳林社交媒体更新</h4>
+            <p>分享与黄乐荣的幕后花絮照片</p>
+          </div>
+          <div class="news-item">
+            <div class="news-date">2024年1月10日</div>
+            <h4>黄乐荣新作品预告</h4>
+            <p>即将上映的新剧预告片发布</p>
+          </div>
+          <div class="news-item">
+            <div class="news-date">2024年1月5日</div>
+            <h4>网站更新公告</h4>
+            <p>新增粉丝互动功能，欢迎体验</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 支持我们 -->
+    <section id="support" class="support">
+      <div class="container">
+        <h2 class="section-title">支持我们</h2>
+
+        <div class="support-content">
+          <div class="support-info">
+            <h3>应援计划</h3>
+            <p>我们正在筹备生日应援活动，包括：</p>
+            <ul>
+              <li>生日广告投放</li>
+              <li>慈善捐赠</li>
+              <li>粉丝礼物制作</li>
+            </ul>
+            <button class="donate-btn">参与应援</button>
+          </div>
+
+          <div class="copyright">
+            <h3>版权声明</h3>
+            <p>
+              本网站为粉丝自发建立，非官方性质。所有素材仅限粉丝交流使用，如有侵权请联系我们删除。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 OHMNANON ONsoul应援组. Made with 💕 by continue.</p>
+      </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

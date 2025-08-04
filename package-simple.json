@@ -1,0 +1,27 @@
+{
+  "name": "ohmnanon-cp-site-simple",
+  "version": "1.0.0",
+  "description": "OHMNANON CP应援站 - 简化版",
+  "main": "server-simple.js",
+  "scripts": {
+    "start": "node server-simple.js",
+    "dev": "node server-simple.js"
+  },
+  "keywords": [
+    "OHMNANON",
+    "陈炳林",
+    "黄乐荣",
+    "CP",
+    "应援站",
+    "粉丝网站"
+  ],
+  "author": "OHMNANON Fans",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 

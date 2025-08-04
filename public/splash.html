@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OHMNANON - 欢迎</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #ffb6c1 0%,
+          #90ee90 50%,
+          #98fb98 100%
+        );
+        font-family: "Arial", sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .splash-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .final-text {
+        font-size: 4rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 2s ease;
+        z-index: 1000;
+      }
+
+      .final-text.show {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .floating-text {
+        position: absolute;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        pointer-events: none;
+        transition: all 3s ease;
+        z-index: 100;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 1.5rem;
+        color: #ff69b4;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      .loading-bar {
+        position: absolute;
+        bottom: 20%;
+        width: 300px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .loading-progress {
+        height: 100%;
+        background: linear-gradient(90deg, #ff69b4, #90ee90);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .loading-text {
+        position: absolute;
+        bottom: 15%;
+        color: white;
+        font-size: 1.2rem;
+        text-align: center;
+        width: 100%;
+      }
+
+      .skip-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .skip-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        .final-text {
+          font-size: 2.5rem;
+        }
+
+        .loading-bar {
+          width: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="splash-container">
+      <div class="final-text" id="finalText">OHMNANON</div>
+
+      <div class="loading-bar">
+        <div class="loading-progress" id="loadingProgress"></div>
+      </div>
+
+      <div
+        class="loading-text"
+        id="loadingText"
+        data-zh="正在汇聚全球粉丝的爱意..."
+        data-en="Gathering love from fans around the world..."
+        data-th="กำลังรวบรวมความรักจากแฟนๆ ทั่วโลก..."
+      >
+        正在汇聚全球粉丝的爱意...
+      </div>
+
+      <button
+        class="skip-btn"
+        onclick="skipAnimation()"
+        data-zh="跳过"
+        data-en="Skip"
+        data-th="ข้าม"
+      >
+        跳过
+      </button>
+    </div>
+
+    <script src="languages.js"></script>
+    <script>
+      // 多语言应援文字列表
+      const supportMessages = {
+        zh: [
+          "永远支持OHMNANON",
+          "陈炳林黄乐荣",
+          "2gether forever",
+          "Still 2gether",
+          "Sarawat Tine",
+          "甜蜜CP",
+          "最佳搭档",
+          "荧幕情侣",
+          "现实好友",
+          "泰国CP",
+          "BL剧",
+          "校园爱情",
+          "大学情侣",
+          "默契配合",
+          "颜值担当",
+          "演技在线",
+          "化学反应",
+          "CP感爆棚",
+          "粉丝最爱",
+          "应援站",
+          "粉丝团",
+          "全球粉丝",
+          "中国粉丝",
+          "泰国粉丝",
+          "日本粉丝",
+          "韩国粉丝",
+          "欧美粉丝",
+          "东南亚粉丝",
+          "国际粉丝",
+          "真爱粉",
+          "死忠粉",
+          "路人粉",
+          "新粉",
+          "老粉",
+          "CP粉",
+          "唯粉",
+          "团粉",
+          "剧粉",
+          "综艺粉",
+          "音乐粉",
+          "OST粉",
+          "采访粉",
+          "花絮粉",
+          "幕后粉",
+          "颁奖礼",
+          "红毯",
+          "采访",
+          "直播",
+          "社交媒体",
+          "Instagram",
+          "Twitter",
+          "YouTube",
+          "微博",
+          "抖音",
+          "B站",
+          "小红书",
+          "豆瓣",
+          "知乎",
+          "贴吧",
+          "超话",
+          "话题",
+          "热搜",
+          "热门",
+          "推荐",
+          "安利",
+          "推荐",
+          "分享",
+          "转发",
+          "点赞",
+          "评论",
+          "留言",
+          "表白",
+          "祝福",
+          "期待",
+          "新作品",
+          "新剧",
+          "新电影",
+          "新综艺",
+          "新音乐",
+          "演唱会",
+          "见面会",
+          "签售会",
+          "粉丝会",
+          "应援会",
+          "生日应援",
+          "周年纪念",
+          "特别企划",
+          "粉丝福利",
+          "独家内容",
+        ],
+        en: [
+          "Forever support OHMNANON",
+          "Chen Binglin Huang Lerong",
+          "2gether forever",
+          "Still 2gether",
+          "Sarawat Tine",
+          "Sweet CP",
+          "Best Duo",
+          "Screen Couple",
+          "Real Friends",
+          "Thai CP",
+          "BL Drama",
+          "Campus Love",
+          "University Couple",
+          "Perfect Chemistry",
+          "Visual Power",
+          "Acting Skills",
+          "Chemistry",
+          "CP Vibes",
+          "Fan Favorite",
+          "Fan Site",
+          "Fan Club",
+          "Global Fans",
+          "Chinese Fans",
+          "Thai Fans",
+          "Japanese Fans",
+          "Korean Fans",
+          "Western Fans",
+          "Southeast Asian Fans",
+          "International Fans",
+          "True Fans",
+          "Die-hard Fans",
+          "Casual Fans",
+          "New Fans",
+          "Old Fans",
+          "CP Fans",
+          "Solo Fans",
+          "Group Fans",
+          "Drama Fans",
+          "Variety Fans",
+          "Music Fans",
+          "OST Fans",
+          "Interview Fans",
+          "Behind Scenes Fans",
+          "Backstage Fans",
+          "Award Ceremony",
+          "Red Carpet",
+          "Interview",
+          "Live Stream",
+          "Social Media",
+          "Instagram",
+          "Twitter",
+          "YouTube",
+          "Weibo",
+          "TikTok",
+          "Bilibili",
+          "Xiaohongshu",
+          "Douban",
+          "Zhihu",
+          "Tieba",
+          "Super Topic",
+          "Trending",
+          "Hot Search",
+          "Popular",
+          "Recommend",
+          "Recommend",
+          "Share",
+          "Forward",
+          "Like",
+          "Comment",
+          "Message",
+          "Confession",
+          "Blessing",
+          "Expectation",
+          "New Work",
+          "New Drama",
+          "New Movie",
+          "New Variety",
+          "New Music",
+          "Concert",
+          "Fan Meeting",
+          "Fan Sign",
+          "Fan Club",
+          "Fan Support",
+          "Birthday Support",
+          "Anniversary",
+          "Special Project",
+          "Fan Benefits",
+          "Exclusive Content",
+        ],
+        th: [
+          "สนับสนุน OHMNANON ตลอดไป",
+          "Chen Binglin Huang Lerong",
+          "2gether forever",
+          "Still 2gether",
+          "Sarawat Tine",
+          "CP หวาน",
+          "คู่หูที่ดีที่สุด",
+          "คู่รักจอ",
+          "เพื่อนแท้",
+          "CP ไทย",
+          "ซีรีส์ BL",
+          "รักในรั้วมหาวิทยาลัย",
+          "คู่รักมหาวิทยาลัย",
+          "เคมีที่สมบูรณ์แบบ",
+          "พลังภาพ",
+          "ทักษะการแสดง",
+          "เคมี",
+          "CP Vibes",
+          "แฟนโปรด",
+          "เว็บไซต์แฟน",
+          "ชมรมแฟน",
+          "แฟนทั่วโลก",
+          "แฟนจีน",
+          "แฟนไทย",
+          "แฟนญี่ปุ่น",
+          "แฟนเกาหลี",
+          "แฟนตะวันตก",
+          "แฟนเอเชียตะวันออกเฉียงใต้",
+          "แฟนนานาชาติ",
+          "แฟนแท้",
+          "แฟนตัวยง",
+          "แฟนทั่วไป",
+          "แฟนใหม่",
+          "แฟนเก่า",
+          "แฟน CP",
+          "แฟนเดี่ยว",
+          "แฟนกลุ่ม",
+          "แฟนซีรีส์",
+          "แฟนวาไรตี้",
+          "แฟนเพลง",
+          "แฟน OST",
+          "แฟนสัมภาษณ์",
+          "แฟนเบื้องหลัง",
+          "แฟนหลังเวที",
+          "งานประกาศรางวัล",
+          "พรมแดง",
+          "สัมภาษณ์",
+          "ไลฟ์สตรีม",
+          "โซเชียลมีเดีย",
+          "Instagram",
+          "Twitter",
+          "YouTube",
+          "Weibo",
+          "TikTok",
+          "Bilibili",
+          "Xiaohongshu",
+          "Douban",
+          "Zhihu",
+          "Tieba",
+          "ซูเปอร์ท็อปปิก",
+          "เทรนด์",
+          "ค้นหาดี",
+          "ยอดนิยม",
+          "แนะนำ",
+          "แนะนำ",
+          "แชร์",
+          "ส่งต่อ",
+          "ชอบ",
+          "แสดงความคิดเห็น",
+          "ข้อความ",
+          "สารภาพ",
+          "อวยพร",
+          "ความคาดหวัง",
+          "ผลงานใหม่",
+          "ซีรีส์ใหม่",
+          "หนังใหม่",
+          "วาไรตี้ใหม่",
+          "เพลงใหม่",
+          "คอนเสิร์ต",
+          "งานแฟนมีทติ้ง",
+          "งานเซ็น",
+          "ชมรมแฟน",
+          "การสนับสนุนแฟน",
+          "การสนับสนุนวันเกิด",
+          "ครบรอบ",
+          "โปรเจกต์พิเศษ",
+          "สิทธิประโยชน์แฟน",
+          "เนื้อหาเฉพาะ",
+        ],
+      };
+
+      let animationProgress = 0;
+      let floatingTexts = [];
+      let hearts = [];
+
+      // 初始化动画
+      function initAnimation() {
+        // 初始化多语言文本
+        initSplashLanguage();
+
+        createFloatingTexts();
+        createHearts();
+        startAnimation();
+      }
+
+      // 初始化开场动画多语言
+      function initSplashLanguage() {
+        const currentLang = getCurrentLanguage();
+        const loadingText = document.getElementById("loadingText");
+        const skipBtn = document.querySelector(".skip-btn");
+
+        if (loadingText && loadingText.getAttribute(`data-${currentLang}`)) {
+          loadingText.textContent = loadingText.getAttribute(
+            `data-${currentLang}`
+          );
+        }
+
+        if (skipBtn && skipBtn.getAttribute(`data-${currentLang}`)) {
+          skipBtn.textContent = skipBtn.getAttribute(`data-${currentLang}`);
+        }
+      }
+
+      // 获取当前语言
+      function getCurrentLanguage() {
+        return localStorage.getItem("language") || "zh";
+      }
+
+      // 创建浮动文字
+      function createFloatingTexts() {
+        const container = document.querySelector(".splash-container");
+        const currentLang = getCurrentLanguage();
+        const messages = supportMessages[currentLang] || supportMessages.zh;
+
+        for (let i = 0; i < 50; i++) {
+          const text = document.createElement("div");
+          text.className = "floating-text";
+          text.textContent =
+            messages[Math.floor(Math.random() * messages.length)];
+
+          // 随机位置
+          text.style.left = Math.random() * 100 + "%";
+          text.style.top = Math.random() * 100 + "%";
+          text.style.fontSize = Math.random() * 0.5 + 0.8 + "rem";
+          text.style.opacity = "0";
+
+          container.appendChild(text);
+          floatingTexts.push(text);
+        }
+      }
+
+      // 创建心形装饰
+      function createHearts() {
+        const container = document.querySelector(".splash-container");
+
+        for (let i = 0; i < 20; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.innerHTML = "💕";
+
+          heart.style.left = Math.random() * 100 + "%";
+          heart.style.top = Math.random() * 100 + "%";
+          heart.style.animationDelay = Math.random() * 2 + "s";
+          heart.style.opacity = "0";
+
+          container.appendChild(heart);
+          hearts.push(heart);
+        }
+      }
+
+      // 开始动画
+      function startAnimation() {
+        const finalText = document.getElementById("finalText");
+        const loadingProgress = document.getElementById("loadingProgress");
+        const loadingText = document.getElementById("loadingText");
+
+        // 第一阶段：显示浮动文字
+        setTimeout(() => {
+          floatingTexts.forEach((text, index) => {
+            setTimeout(() => {
+              text.style.opacity = "1";
+            }, index * 50);
+          });
+        }, 500);
+
+        // 第二阶段：显示心形
+        setTimeout(() => {
+          hearts.forEach((heart, index) => {
+            setTimeout(() => {
+              heart.style.opacity = "1";
+            }, index * 100);
+          });
+        }, 2000);
+
+        // 第三阶段：文字汇聚
+        setTimeout(() => {
+          const centerX = window.innerWidth / 2;
+          const centerY = window.innerHeight / 2;
+
+          floatingTexts.forEach((text, index) => {
+            setTimeout(() => {
+              text.style.left = centerX + "px";
+              text.style.top = centerY + "px";
+              text.style.transform = "scale(0)";
+              text.style.opacity = "0";
+            }, index * 30);
+          });
+
+          hearts.forEach((heart, index) => {
+            setTimeout(() => {
+              heart.style.left = centerX + "px";
+              heart.style.top = centerY + "px";
+              heart.style.transform = "scale(0)";
+              heart.style.opacity = "0";
+            }, index * 50);
+          });
+        }, 4000);
+
+        // 第四阶段：显示最终文字
+        setTimeout(() => {
+          finalText.classList.add("show");
+          loadingProgress.style.width = "100%";
+
+          // 根据语言显示不同的欢迎文本
+          const currentLang = getCurrentLanguage();
+          const welcomeTexts = {
+            zh: "欢迎来到OHMNANON的世界！",
+            en: "Welcome to OHMNANON World!",
+            th: "ยินดีต้อนรับสู่โลกของ OHMNANON!",
+          };
+          loadingText.textContent =
+            welcomeTexts[currentLang] || welcomeTexts.zh;
+        }, 6000);
+
+        // 第五阶段：跳转到主页面
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 8000);
+
+        // 更新进度条
+        const progressInterval = setInterval(() => {
+          animationProgress += 1;
+          loadingProgress.style.width = (animationProgress / 80) * 100 + "%";
+
+          if (animationProgress >= 80) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      }
+
+      // 跳过动画
+      function skipAnimation() {
+        window.location.href = "index.html";
+      }
+
+      // 页面加载完成后开始动画
+      window.addEventListener("load", initAnimation);
+    </script>
+  </body>
+</html>
